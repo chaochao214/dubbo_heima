@@ -42,6 +42,7 @@ import static org.apache.dubbo.common.constants.CommonConstants.INTERFACE_KEY;
 /**
  * AbstractMonitorFactory. (SPI, Singleton, ThreadSafe)
  */
+@SuppressWarnings("ALL")
 public abstract class AbstractMonitorFactory implements MonitorFactory {
     private static final Logger logger = LoggerFactory.getLogger(AbstractMonitorFactory.class);
 
@@ -60,6 +61,7 @@ public abstract class AbstractMonitorFactory implements MonitorFactory {
     /**
      * The monitor create executor
      */
+    @SuppressWarnings("SpellCheckingInspection")
     private static final ExecutorService executor = new ThreadPoolExecutor(0, 10, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>(), new NamedThreadFactory("DubboMonitorCreator", true));
 
     public static Collection<Monitor> getMonitors() {

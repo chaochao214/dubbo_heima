@@ -51,6 +51,8 @@ public class ZookeeperRegistryTest {
     private URL registryUrl;
     private ZookeeperRegistryFactory zookeeperRegistryFactory;
 
+
+
     @BeforeEach
     public void setUp() throws Exception {
         int zkServerPort = NetUtils.getAvailablePort();
@@ -88,6 +90,25 @@ public class ZookeeperRegistryTest {
         registered = zookeeperRegistry.getRegistered();
         assertThat(registered.size(), is(1));
     }
+
+
+
+    @Test
+    public void testRegisterLocalZk() {
+        //自定义设置
+        URL localUrl = URL.valueOf("zookeeper://localhost:" + "2181");
+        ZookeeperRegistry zkRegisy= (ZookeeperRegistry) zookeeperRegistryFactory.createRegistry(localUrl);
+        Set<URL> registered;
+        for (int i = 0; i < 2; i++) {
+            zkRegisy.register(serviceUrl);
+            registered = zkRegisy.getRegistered();
+            assertThat(registered.contains(serviceUrl), is(true));
+        }
+        registered = zkRegisy.getRegistered();
+        assertThat(registered.size(), is(1));
+    }
+
+
 
     @Test
     public void testSubscribe() {
